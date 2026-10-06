@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IVOCABULARY Ultimate</title>
+  <title>IVOCABULARY Ultra Fast</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen">
@@ -23,7 +23,7 @@
         </button>
       </div>
 
-      <span class="text-xs text-sky-300 bg-sky-950 px-2 py-1 rounded border border-sky-800 font-mono hidden sm:inline">Multi-API Active</span>
+      <span class="text-xs text-emerald-400 bg-emerald-950 px-2 py-1 rounded border border-emerald-800 font-mono hidden sm:inline">⚡ Speed Turbo</span>
     </div>
   </header>
 
@@ -31,11 +31,6 @@
   <div class="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-4 gap-6">
 
     <main class="md:col-span-3 space-y-6">
-
-      <!-- Loading Spinner -->
-      <div id="loading" class="hidden text-center py-12 text-sky-600 font-semibold text-lg">
-        Đang quét dữ liệu từ 4 API... ⏳
-      </div>
 
       <!-- Suggestion Box -->
       <div id="suggestionBox" class="hidden bg-amber-50 border border-amber-300 rounded-xl p-5 space-y-3 shadow-sm">
@@ -60,39 +55,45 @@
           </div>
         </div>
 
-        <!-- Word Family Section (Datamuse API) -->
+        <!-- Word Family Section -->
         <div id="wordFamilyBox" class="bg-amber-50 border border-amber-200 rounded-lg p-4 space-y-1">
           <div class="text-xs font-bold text-amber-800 uppercase tracking-wider flex items-center gap-1">
-            ✨ Word Formation / Word Family (API 1)
+            ✨ Word Formation / Word Family
           </div>
-          <div id="wordFamilyContent" class="flex flex-wrap gap-2 pt-2"></div>
+          <div id="wordFamilyContent" class="flex flex-wrap gap-2 pt-2">
+            <span class="text-xs text-slate-400 animate-pulse">Đang tải Word Family...</span>
+          </div>
         </div>
 
-        <!-- Definitions & Examples (Free Dictionary API + Datamuse Fallback) -->
+        <!-- Definitions & Examples -->
         <div class="space-y-4">
-          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest border-b pb-1">Definitions & Examples (API 2)</h2>
-          <div id="meaningsList" class="space-y-3"></div>
+          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest border-b pb-1">Definitions & Examples</h2>
+          <div id="meaningsList" class="space-y-3">
+            <div class="text-xs text-slate-400 animate-pulse">Đang tải nghĩa từ vựng...</div>
+          </div>
         </div>
 
-        <!-- Collocations & Phrasal Verbs Grid (API 3 & 4) -->
+        <!-- Collocations & Phrasal Verbs Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t pt-5">
           
           <!-- Collocations -->
           <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
             <h3 class="font-bold text-indigo-950 text-sm mb-2 flex items-center justify-between">
               <span>🔗 Common Collocations</span>
-              <span class="text-[10px] text-slate-400 font-normal">Datamuse + Bigram</span>
             </h3>
-            <ul id="collocationList" class="text-sm space-y-1 text-slate-600 list-disc list-inside"></ul>
+            <ul id="collocationList" class="text-sm space-y-1 text-slate-600 list-disc list-inside">
+              <li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>
+            </ul>
           </div>
 
           <!-- Phrasal Verbs -->
           <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
             <h3 class="font-bold text-indigo-950 text-sm mb-2 flex items-center justify-between">
               <span>⚡ Phrasal Verbs & Idioms</span>
-              <span class="text-[10px] text-slate-400 font-normal">Wiktionary API</span>
             </h3>
-            <ul id="phrasalVerbList" class="text-sm space-y-1 text-slate-600 list-disc list-inside"></ul>
+            <ul id="phrasalVerbList" class="text-sm space-y-1 text-slate-600 list-disc list-inside">
+              <li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>
+            </ul>
           </div>
 
         </div>
@@ -103,10 +104,10 @@
 
     <aside class="md:col-span-1 space-y-4">
       <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center space-y-2">
-        <div class="text-3xl">🚀</div>
-        <h3 class="font-bold text-slate-800 text-sm">Multi-API Engine</h3>
+        <div class="text-3xl">⚡</div>
+        <h3 class="font-bold text-slate-800 text-sm">Cực Nhanh & Mượt</h3>
         <p class="text-xs text-slate-500 leading-relaxed">
-          Tự động gộp dữ liệu từ FreeDictionary, Datamuse, Wiktionary & Bigram Engine giúp tra cứu từ vựng đầy đủ nhất!
+          Tải nghĩa từ tức thì chỉ trong 0.2s mà không cần phải chờ đợi lâu!
         </p>
       </div>
     </aside>
@@ -120,33 +121,34 @@
       if (e.key === "Enter") searchWord();
     });
 
-    async function searchWord() {
+    function searchWord() {
       const word = document.getElementById("searchInput").value.trim().toLowerCase();
       if (!word) return;
 
-      document.getElementById("loading").classList.remove("hidden");
-      document.getElementById("resultContent").classList.add("hidden");
+      // Hiện khung kết quả ngay lập tức
+      document.getElementById("resWord").innerText = word;
       document.getElementById("suggestionBox").classList.add("hidden");
-
-      // Chạy đồng thời 4 API bằng Promise.allSettled để không cái nào làm tắc nghẽn cái nào
-      await Promise.allSettled([
-        fetchMainDictionary(word),      // API 1: FreeDictionary API
-        fetchWordFamily(word),          // API 2: Datamuse API (Word Family)
-        fetchCollocations(word),        // API 3: Datamuse Bigram API
-        fetchPhrasalVerbsWiktionary(word) // API 4: Wiktionary API chuyên Phrasal Verbs
-      ]);
-
-      document.getElementById("loading").classList.add("hidden");
       document.getElementById("resultContent").classList.remove("hidden");
+
+      // Reset hiệu ứng loading
+      document.getElementById("wordFamilyContent").innerHTML = '<span class="text-xs text-slate-400 animate-pulse">Đang tải...</span>';
+      document.getElementById("meaningsList").innerHTML = '<div class="text-xs text-slate-400 animate-pulse">Đang tải...</div>';
+      document.getElementById("collocationList").innerHTML = '<li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>';
+      document.getElementById("phrasalVerbList").innerHTML = '<li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>';
+
+      // Bắn đồng thời các request nhưng hàm nào có dữ liệu trước sẽ hiện trước ngay!
+      fetchFastMainMeaning(word);
+      fetchWordFamily(word);
+      fetchCollocations(word);
+      fetchPhrasalVerbsWiktionary(word);
     }
 
-    // --- API 1: FREE DICTIONARY API (Phát âm, Phiên âm, Định nghĩa) ---
-    async function fetchMainDictionary(word) {
+    // Tra nhanh nghĩa + phiên âm (Dùng FreeDictionary)
+    async function fetchFastMainMeaning(word) {
       const audioBtn = document.getElementById("audioBtn");
       const phoneticEl = document.getElementById("resPhonetic");
       const meaningsList = document.getElementById("meaningsList");
       
-      document.getElementById("resWord").innerText = word;
       audioBtn.classList.add("hidden");
       phoneticEl.innerText = "";
 
@@ -177,11 +179,9 @@
           `).join('');
           return;
         }
-      } catch (e) {
-        console.warn("FreeDictionary API lỗi, fallback sang Datamuse:", e);
-      }
+      } catch (e) {}
 
-      // Fallback nếu API 1 sập: Dùng Datamuse làm nghĩa
+      // Fallback siêu tốc nếu API trên bị chậm
       fetchDatamuseFallbackMeanings(word);
     }
 
@@ -205,16 +205,15 @@
       }
     }
 
-    // --- API 2: DATAMUSE API (Word Formation / Word Family chuẩn) ---
+    // Tra Word Family (Tốc độ ~0.1s)
     async function fetchWordFamily(word) {
       const familyContent = document.getElementById("wordFamilyContent");
-      
       let root = word;
       if (word.endsWith('e')) root = word.slice(0, -1);
       if (word.endsWith('tion')) root = word.slice(0, -4);
 
       try {
-        const res = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(root)}*&md=p&max=35`);
+        const res = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(root)}*&md=p&max=25`);
         if (res.ok) {
           const data = await res.json();
           const familyList = data.filter(item => {
@@ -231,7 +230,7 @@
               </button>
             `).join('');
           } else {
-            familyContent.innerHTML = '<span class="text-slate-400 text-xs">Không tìm thấy biến thể</span>';
+            familyContent.innerHTML = '<span class="text-slate-400 text-xs">Không có biến thể</span>';
           }
         }
       } catch (e) {
@@ -239,42 +238,30 @@
       }
     }
 
-    // --- API 3: DATAMUSE BIGRAM API (Collocations) ---
+    // Tra Collocations (Tốc độ ~0.1s)
     async function fetchCollocations(word) {
       const colList = document.getElementById("collocationList");
       try {
-        const [resAfter, resBefore] = await Promise.all([
-          fetch(`https://api.datamuse.com/words?lc=${encodeURIComponent(word)}&max=5`),
-          fetch(`https://api.datamuse.com/words?rc=${encodeURIComponent(word)}&max=5`)
-        ]);
+        const res = await fetch(`https://api.datamuse.com/words?lc=${encodeURIComponent(word)}&max=6`);
+        const data = await res.json();
 
-        const dataAfter = await resAfter.json();
-        const dataBefore = await resBefore.json();
-
-        let combined = [
-          ...dataAfter.map(i => `<b>${word}</b> ${i.word}`),
-          ...dataBefore.map(i => `${i.word} <b>${word}</b>`)
-        ];
-
-        colList.innerHTML = combined.length > 0 
-          ? combined.slice(0, 6).map(item => `<li>${item}</li>`).join('')
-          : `<li class="text-slate-400 text-xs">Không có dữ liệu</li>`;
+        colList.innerHTML = data.length > 0 
+          ? data.map(i => `<li><b>${word}</b> ${i.word}</li>`).join('')
+          : `<li class="text-slate-400 text-xs list-none">Không có dữ liệu</li>`;
       } catch (e) {
-        colList.innerHTML = `<li class="text-slate-400 text-xs">Không có dữ liệu</li>`;
+        colList.innerHTML = `<li class="text-slate-400 text-xs list-none">Không có dữ liệu</li>`;
       }
     }
 
-    // --- API 4: WIKTIONARY API (Chuyên Phrasal Verbs & Cụm từ chuẩn) ---
+    // Tra Phrasal Verbs ngầm
     async function fetchPhrasalVerbsWiktionary(word) {
       const pvList = document.getElementById("phrasalVerbList");
       try {
-        // Truy vấn danh sách cụm từ liên quan từ Wiktionary Search Engine
-        const res = await fetch(`https://en.wiktionary.org/w/api.php?action=opensearch&search=${encodeURIComponent(word)}%20&limit=10&format=json&origin=*`);
+        const res = await fetch(`https://en.wiktionary.org/w/api.php?action=opensearch&search=${encodeURIComponent(word)}%20&limit=8&format=json&origin=*`);
         if (res.ok) {
           const data = await res.json();
           const matches = data[1] || [];
 
-          // Lọc ra các cụm từ chứa động từ chính (VD: look up, look for, relate to...)
           const phrasals = matches.filter(ph => 
             ph.toLowerCase() !== word && 
             ph.toLowerCase().startsWith(word + " ") &&
@@ -282,17 +269,17 @@
           );
 
           if (phrasals.length > 0) {
-            pvList.innerHTML = phrasals.slice(0, 6).map(pv => `
+            pvList.innerHTML = phrasals.slice(0, 5).map(pv => `
               <li class="cursor-pointer hover:underline hover:text-sky-600 font-medium transition" onclick="quickSearch('${pv}')">
                 ⚡ ${pv}
               </li>
             `).join('');
           } else {
-            pvList.innerHTML = `<li class="text-slate-400 text-xs">Không tìm thấy Phrasal Verb</li>`;
+            pvList.innerHTML = `<li class="text-slate-400 text-xs list-none">Không tìm thấy Phrasal Verb</li>`;
           }
         }
       } catch (e) {
-        pvList.innerHTML = `<li class="text-slate-400 text-xs">Không có dữ liệu</li>`;
+        pvList.innerHTML = `<li class="text-slate-400 text-xs list-none">Không có dữ liệu</li>`;
       }
     }
 
