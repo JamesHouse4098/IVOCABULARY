@@ -6,10 +6,10 @@
   <title>IVOCABULARY Ultra Fast</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans min-h-screen">
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen relative">
 
   <!-- Header -->
-  <header class="bg-indigo-950 text-white shadow-lg sticky top-0 z-50">
+  <header class="bg-indigo-950 text-white shadow-lg sticky top-0 z-40">
     <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-2 font-black text-2xl tracking-wide text-sky-400 cursor-pointer" onclick="location.reload()">
         <span>📖</span> IVOCABULARY
@@ -23,7 +23,11 @@
         </button>
       </div>
 
-      <span class="text-xs text-emerald-400 bg-emerald-950 px-2 py-1 rounded border border-emerald-800 font-mono hidden sm:inline">⚡ Speed Turbo</span>
+      <div class="flex items-center gap-2">
+        <span id="licenseBadge" class="text-xs bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2.5 py-1 rounded-full font-semibold">
+          🎁 Dùng thử (1 lượt)
+        </span>
+      </div>
     </div>
   </header>
 
@@ -32,11 +36,11 @@
 
     <main class="md:col-span-3 space-y-6">
 
-      <!-- Hero Welcome Section (Ẩn đi khi search) -->
+      <!-- Hero Welcome Section -->
       <div id="welcomeBanner" class="bg-gradient-to-br from-indigo-900 via-slate-900 to-indigo-950 text-white rounded-2xl p-8 border border-indigo-800/50 shadow-xl space-y-6 relative overflow-hidden">
         <div class="relative z-10 space-y-3">
           <div class="inline-flex items-center gap-2 bg-sky-500/20 text-sky-300 text-xs font-bold px-3 py-1 rounded-full border border-sky-500/30">
-            <span>✨</span> Tra Từ Thông Minh & Siêu Tốc
+            <span>✨</span> Tra Từ Thông Minh & Siêu Tốc - Chia Sẻ Giáo Dục James Edu
           </div>
           <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
             Chào mừng đến với <span class="text-sky-400">IVOCABULARY</span>
@@ -76,7 +80,6 @@
           <button onclick="quickSearch('relate')" class="bg-white/10 hover:bg-sky-500 hover:text-white text-slate-200 px-2.5 py-1 rounded transition">relate</button>
           <button onclick="quickSearch('break')" class="bg-white/10 hover:bg-sky-500 hover:text-white text-slate-200 px-2.5 py-1 rounded transition">break</button>
           <button onclick="quickSearch('cite')" class="bg-white/10 hover:bg-sky-500 hover:text-white text-slate-200 px-2.5 py-1 rounded transition">cite</button>
-          <button onclick="quickSearch('look')" class="bg-white/10 hover:bg-sky-500 hover:text-white text-slate-200 px-2.5 py-1 rounded transition">look</button>
         </div>
       </div>
 
@@ -91,7 +94,6 @@
       <!-- Dictionary Output Card -->
       <div id="resultContent" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-6">
         
-        <!-- Word Header -->
         <div class="flex items-baseline justify-between border-b pb-4">
           <div>
             <h1 id="resWord" class="text-4xl font-extrabold text-indigo-950">---</h1>
@@ -103,7 +105,6 @@
           </div>
         </div>
 
-        <!-- Word Family Section -->
         <div id="wordFamilyBox" class="bg-amber-50 border border-amber-200 rounded-lg p-4 space-y-1">
           <div class="text-xs font-bold text-amber-800 uppercase tracking-wider flex items-center gap-1">
             ✨ Word Formation / Word Family
@@ -113,7 +114,6 @@
           </div>
         </div>
 
-        <!-- Definitions & Examples -->
         <div class="space-y-4">
           <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest border-b pb-1">Definitions & Examples</h2>
           <div id="meaningsList" class="space-y-3">
@@ -121,29 +121,20 @@
           </div>
         </div>
 
-        <!-- Collocations & Phrasal Verbs Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t pt-5">
-          
-          <!-- Collocations -->
           <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-            <h3 class="font-bold text-indigo-950 text-sm mb-2 flex items-center justify-between">
-              <span>🔗 Common Collocations</span>
-            </h3>
+            <h3 class="font-bold text-indigo-950 text-sm mb-2">🔗 Common Collocations</h3>
             <ul id="collocationList" class="text-sm space-y-1 text-slate-600 list-disc list-inside">
               <li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>
             </ul>
           </div>
 
-          <!-- Phrasal Verbs -->
           <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-            <h3 class="font-bold text-indigo-950 text-sm mb-2 flex items-center justify-between">
-              <span>⚡ Phrasal Verbs & Idioms</span>
-            </h3>
+            <h3 class="font-bold text-indigo-950 text-sm mb-2">⚡ Phrasal Verbs & Idioms</h3>
             <ul id="phrasalVerbList" class="text-sm space-y-1 text-slate-600 list-disc list-inside">
               <li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>
             </ul>
           </div>
-
         </div>
 
       </div>
@@ -162,32 +153,171 @@
 
   </div>
 
+  <!-- POPUP YÊU CẦU NHẬP MÃ KEY -->
+  <div id="keyModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 p-6 space-y-5 animate-in fade-in zoom-in duration-200">
+      
+      <div class="text-center space-y-2">
+        <div class="w-12 h-12 bg-indigo-100 text-indigo-900 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">🔑</div>
+        <h2 class="text-2xl font-black text-slate-900">Kích Hoạt Bản Quyền</h2>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Bạn đã dùng hết 1 lượt tra miễn phí. Vui lòng nhập mã Key phía sau các sách ôn tập tiếng Anh của <b>Chia Sẻ Giáo Dục James Edu</b> để mở khóa không giới hạn vĩnh viễn!
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Mã Key Activation</label>
+          <input id="keyInput" type="text" placeholder="Nhập mã key dạng JAMESEDU-..." 
+                 class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none uppercase" />
+        </div>
+
+        <!-- Các trường mở rộng cho Mã 3 -->
+        <div id="extraFields" class="hidden space-y-3 border-t pt-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Mật khẩu xác minh (Password)</label>
+            <input id="passInput" type="password" placeholder="Nhập mật khẩu đi kèm..." 
+                   class="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nhà cung cấp (Provider)</label>
+            <select id="providerSelect" class="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+              <option value="">-- Chọn nhà cung cấp --</option>
+              <option value="James Edu">James Edu</option>
+              <option value="James Studio">James Studio</option>
+              <option value="IVOCABULARY Pro">IVOCABULARY Pro</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="keyError" class="text-xs text-rose-600 font-semibold text-center hidden"></div>
+
+        <button onclick="verifyKey()" class="w-full bg-indigo-900 hover:bg-indigo-950 text-white font-bold py-3 rounded-lg shadow-lg transition text-sm">
+          Xác Nhận & Kích Hoạt
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <script>
     let audioUrl = "";
+    
+    // Kiểm tra trạng thái bản quyền khi mở web
+    document.addEventListener("DOMContentLoaded", () => {
+      checkLicenseStatus();
+    });
+
+    function checkLicenseStatus() {
+      const isActivated = localStorage.getItem("ivocab_activated");
+      const badge = document.getElementById("licenseBadge");
+      
+      if (isActivated === "true") {
+        badge.className = "text-xs bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2.5 py-1 rounded-full font-semibold";
+        badge.innerText = "PRO Vĩnh Viễn";
+      } else {
+        const usageCount = parseInt(localStorage.getItem("ivocab_usage") || "0");
+        if (usageCount >= 1) {
+          showKeyModal();
+        }
+      }
+    }
+
+    function showKeyModal() {
+      document.getElementById("keyModal").classList.remove("hidden");
+    }
+
+    // Tự mở các ô nâng cao nếu nhập mã POFIVOCABULARY-98576
+    document.getElementById("keyInput").addEventListener("input", (e) => {
+      const val = e.target.value.trim();
+      const extraFields = document.getElementById("extraFields");
+      if (val === "POFIVOCABULARY-98576") {
+        extraFields.classList.remove("hidden");
+      } else {
+        extraFields.classList.add("hidden");
+      }
+    });
+
+    function verifyKey() {
+      const key = document.getElementById("keyInput").value.trim();
+      const pass = document.getElementById("passInput").value.trim();
+      const provider = document.getElementById("providerSelect").value;
+      const errorEl = document.getElementById("keyError");
+
+      errorEl.classList.add("hidden");
+
+      // Danh sách Mã Key hợp lệ 1 & 2
+      if (key === "JAMESEDU-18ZxL0@" || key === "JAMESEDU-BDHsG0") {
+        activateSuccess();
+        return;
+      }
+
+      // Mã Key 3 đặc biệt
+      if (key === "POFIVOCABULARY-98576") {
+        if (pass === "JAMESEDU1769-POJK") {
+          if (provider !== "") {
+            activateSuccess();
+            return;
+          } else {
+            showError("Vui lòng chọn Nhà cung cấp!");
+            return;
+          }
+        } else {
+          showError("Mật khẩu xác minh không chính xác!");
+          return;
+        }
+      }
+
+      showError("Mã Key không hợp lệ. Vui lòng kiểm tra lại!");
+    }
+
+    function showError(msg) {
+      const errorEl = document.getElementById("keyError");
+      errorEl.innerText = msg;
+      errorEl.classList.remove("hidden");
+    }
+
+    function activateSuccess() {
+      localStorage.setItem("ivocab_activated", "true");
+      document.getElementById("keyModal").classList.add("hidden");
+      checkLicenseStatus();
+      alert("🎉 Kích hoạt thành công bản quyền không giới hạn vĩnh viễn trên máy này!");
+    }
 
     document.getElementById("searchInput").addEventListener("keypress", (e) => {
       if (e.key === "Enter") searchWord();
     });
 
     function searchWord() {
+      const isActivated = localStorage.getItem("ivocab_activated");
+      let usageCount = parseInt(localStorage.getItem("ivocab_usage") || "0");
+
+      // Nếu chưa kích hoạt và đã dùng 1 lần thì chặn lại
+      if (isActivated !== "true" && usageCount >= 1) {
+        showKeyModal();
+        return;
+      }
+
       const word = document.getElementById("searchInput").value.trim().toLowerCase();
       if (!word) return;
 
-      // Ẩn Banner Giới Thiệu khi người dùng tra từ
-      document.getElementById("welcomeBanner").classList.add("hidden");
+      // Tăng lượt dùng nếu chưa kích hoạt
+      if (isActivated !== "true") {
+        usageCount++;
+        localStorage.setItem("ivocab_usage", usageCount.toString());
+      }
 
-      // Hiện khung kết quả ngay lập tức
+      document.getElementById("welcomeBanner").classList.add("hidden");
       document.getElementById("resWord").innerText = word;
       document.getElementById("suggestionBox").classList.add("hidden");
       document.getElementById("resultContent").classList.remove("hidden");
 
-      // Reset hiệu ứng loading
       document.getElementById("wordFamilyContent").innerHTML = '<span class="text-xs text-slate-400 animate-pulse">Đang tải...</span>';
       document.getElementById("meaningsList").innerHTML = '<div class="text-xs text-slate-400 animate-pulse">Đang tải...</div>';
       document.getElementById("collocationList").innerHTML = '<li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>';
       document.getElementById("phrasalVerbList").innerHTML = '<li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>';
 
-      // Bắn đồng thời các request
       fetchFastMainMeaning(word);
       fetchWordFamily(word);
       fetchCollocations(word);
