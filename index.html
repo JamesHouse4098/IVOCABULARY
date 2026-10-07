@@ -37,7 +37,7 @@
     <div class="max-w-4xl mx-auto text-center space-y-6">
       
       <div class="inline-flex items-center gap-2 bg-sky-500/20 text-sky-300 text-xs font-bold px-3 py-1 rounded-full border border-sky-500/30">
-        <span>✨</span> Chia Sẻ Giáo Dục James Edu - Tra Từ Siêu Tốc 0.1s
+        <span>✨</span> Chia Sẻ Giáo Dục James Edu - Multi-API Fast Engine
       </div>
 
       <h1 class="text-4xl sm:text-5xl font-black tracking-tight">
@@ -131,7 +131,7 @@
     <div id="noDataBox" class="hidden bg-rose-50 border border-rose-200 text-rose-800 rounded-2xl p-8 text-center space-y-3 my-6 shadow-sm">
       <div class="text-4xl">🚫</div>
       <h3 class="text-lg font-extrabold">Không tìm thấy dữ liệu</h3>
-      <p class="text-sm text-rose-600 max-w-md mx-auto">Từ bạn nhập không có trong hệ thống từ điển tiếng Anh và cũng không tìm thấy từ nào đủ tương đồng.</p>
+      <p class="text-sm text-rose-600 max-w-md mx-auto">Từ bạn nhập không có trong bất kỳ hệ thống API từ điển nào và cũng không tìm thấy từ đủ tương đồng.</p>
     </div>
 
     <!-- Dictionary Output Card -->
@@ -153,14 +153,14 @@
           ✨ Word Formation / Word Family
         </div>
         <div id="wordFamilyContent" class="flex flex-wrap gap-2 pt-2">
-          <span class="text-xs text-slate-400 animate-pulse">Đang tải Word Family...</span>
+          <span class="text-xs text-slate-400">Đang tra cứu từ API 1...</span>
         </div>
       </div>
 
       <div class="space-y-4">
         <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest border-b pb-1">Definitions & Examples</h2>
         <div id="meaningsList" class="space-y-3">
-          <div class="text-xs text-slate-400 animate-pulse">Đang tải nghĩa từ vựng...</div>
+          <div class="text-xs text-slate-400">Đang tra cứu từ API 1 & 2...</div>
         </div>
       </div>
 
@@ -168,14 +168,14 @@
         <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
           <h3 class="font-bold text-indigo-950 text-sm mb-2">🔗 Common Collocations</h3>
           <ul id="collocationList" class="text-sm space-y-1 text-slate-600 list-disc list-inside">
-            <li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>
+            <li class="text-xs text-slate-400 list-none">Đang tra cứu từ API 3...</li>
           </ul>
         </div>
 
         <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
           <h3 class="font-bold text-indigo-950 text-sm mb-2">⚡ Phrasal Verbs & Idioms</h3>
           <ul id="phrasalVerbList" class="text-sm space-y-1 text-slate-600 list-disc list-inside">
-            <li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>
+            <li class="text-xs text-slate-400 list-none">Đang tra cứu từ API 4...</li>
           </ul>
         </div>
       </div>
@@ -186,7 +186,7 @@
 
   <!-- POPUP YÊU CẦU NHẬP MÃ KEY -->
   <div id="keyModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50 hidden">
-    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 p-6 space-y-5 animate-in fade-in zoom-in duration-200">
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 p-6 space-y-5">
       
       <div class="text-center space-y-2">
         <div class="w-12 h-12 bg-indigo-100 text-indigo-900 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">🔑</div>
@@ -200,19 +200,19 @@
         <div>
           <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Mã Key Activation</label>
           <input id="keyInput" type="text" placeholder="Nhập mã key dạng JAMESEDU-..." 
-                 class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none uppercase" />
+                 class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 font-mono text-sm uppercase" />
         </div>
 
         <div id="extraFields" class="hidden space-y-3 border-t pt-3">
           <div>
             <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Mật khẩu xác minh (Password)</label>
             <input id="passInput" type="password" placeholder="Nhập mật khẩu đi kèm..." 
-                   class="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+                   class="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 font-mono text-sm" />
           </div>
 
           <div>
             <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nhà cung cấp (Provider)</label>
-            <select id="providerSelect" class="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <select id="providerSelect" class="w-full px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 text-sm">
               <option value="">-- Chọn nhà cung cấp --</option>
               <option value="James Edu">James Edu</option>
               <option value="James Studio">James Studio</option>
@@ -235,27 +235,23 @@
     let audioUrl = "";
     let currentSearchWord = "";
     let suggestionLimit = 6;
-    const cacheMemory = {}; // In-memory Cache giúp nạp từ trong 0s
 
     document.addEventListener("DOMContentLoaded", () => {
       checkLicenseStatus();
       renderRecentHistory();
     });
 
-    // Thuật toán tính độ tương đồng nhanh
+    // Thuật toán tính % match siêu tốc
     function calculateSimilarity(s1, s2) {
-      s1 = s1.toLowerCase();
-      s2 = s2.toLowerCase();
+      s1 = s1.toLowerCase(); s2 = s2.toLowerCase();
       if (s1 === s2) return 100;
       const l1 = s1.length, l2 = s2.length;
       if (!l1 || !l2) return 0;
-
       let match = 0;
-      const maxL = Math.max(l1, l2);
       for (let i = 0; i < Math.min(l1, l2); i++) {
         if (s1[i] === s2[i]) match++;
       }
-      return Math.round((match / maxL) * 100);
+      return Math.round((match / Math.max(l1, l2)) * 100);
     }
 
     function checkLicenseStatus() {
@@ -368,151 +364,144 @@
       document.getElementById("resultContent").classList.remove("hidden");
 
       document.getElementById("resWord").innerText = word;
-      document.getElementById("wordFamilyContent").innerHTML = '<span class="text-xs text-slate-400 animate-pulse">Đang tải...</span>';
-      document.getElementById("meaningsList").innerHTML = '<div class="text-xs text-slate-400 animate-pulse">Đang tải...</div>';
-      document.getElementById("collocationList").innerHTML = '<li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>';
-      document.getElementById("phrasalVerbList").innerHTML = '<li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>';
 
-      // Tra cứu dữ liệu kết hợp cực nhanh
-      const found = await fetchMainMeaningFast(word);
+      // CHẠY 4 API SONG SONG (Parallel Execution) - CỰC NHANH
+      const results = await Promise.allSettled([
+        fetchAPI1_Datamuse(word),         // API 1: Meaning + Word Family
+        fetchAPI2_FreeDictionary(word),   // API 2: IPA + Audio + Backup Meaning
+        fetchAPI3_Collocations(word),     // API 3: Collocations
+        fetchAPI4_PhrasalVerbs(word)      // API 4: Phrasal Verbs
+      ]);
 
-      if (found) {
-        // Chạy ngầm không nghẽn luồng
-        Promise.all([
-          fetchWordFamilyFast(word),
-          fetchCollocationsFast(word),
-          fetchPhrasalVerbsFast(word)
-        ]);
-      } else {
+      const api1Status = results[0].value;
+      const api2Status = results[1].value;
+
+      // ĐỐI CHIẾU: Nếu cả API 1 và API 2 đều KHÔNG tìm thấy từ -> Coi như từ nhập sai
+      if (!api1Status && !api2Status) {
         document.getElementById("resultContent").classList.add("hidden");
         fetchSpellingSuggestionsWithMatch(word);
       }
     }
 
-    // Tra cứu nghĩa chính siêu tốc
-    async function fetchMainMeaningFast(word) {
-      const audioBtn = document.getElementById("audioBtn");
-      const phoneticEl = document.getElementById("resPhonetic");
+    // --- API 1: DATAMUSE (Tra Nghĩa + Word Family) ---
+    async function fetchAPI1_Datamuse(word) {
+      const familyContent = document.getElementById("wordFamilyContent");
       const meaningsList = document.getElementById("meaningsList");
-      
-      audioBtn.classList.add("hidden");
-      phoneticEl.innerText = "";
-
-      // Kiểm tra Cache
-      if (cacheMemory[word]) {
-        renderMeaningUI(cacheMemory[word]);
-        return true;
-      }
+      let found = false;
 
       try {
-        // Ưu tiên 1: FreeDictionary API
-        const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
+        const res = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(word)}&md=d&max=1`);
         if (res.ok) {
           const data = await res.json();
-          cacheMemory[word] = data[0];
-          renderMeaningUI(data[0]);
-          return true;
-        }
-      } catch (e) {}
-
-      // Ưu tiên 2: Datamuse API Fallback
-      try {
-        const resDm = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(word)}&md=d&max=1`);
-        if (resDm.ok) {
-          const dataDm = await resDm.json();
-          if (dataDm.length > 0 && dataDm[0].word.toLowerCase() === word && dataDm[0].defs) {
-            meaningsList.innerHTML = dataDm[0].defs.slice(0, 4).map(defStr => {
+          if (data.length > 0 && data[0].word.toLowerCase() === word && data[0].defs) {
+            meaningsList.innerHTML = data[0].defs.slice(0, 4).map(defStr => {
               const parts = defStr.split('\t');
               return `<div class="flex items-start gap-2">
                         <span class="text-xs font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded uppercase mt-0.5">${parts[0] || 'word'}</span>
                         <p class="text-slate-800 font-medium">${parts[1] || defStr}</p>
                       </div>`;
             }).join('');
-            document.getElementById("posBadge").innerText = "word";
-            return true;
+            found = true;
           }
         }
-      } catch (e) {}
-
-      return false;
-    }
-
-    function renderMeaningUI(item) {
-      const audioBtn = document.getElementById("audioBtn");
-      const phoneticEl = document.getElementById("resPhonetic");
-      const meaningsList = document.getElementById("meaningsList");
-
-      phoneticEl.innerText = item.phonetic || (item.phonetics && item.phonetics.find(p => p.text)?.text) || "";
-      const audioObj = item.phonetics ? item.phonetics.find(p => p.audio && p.audio.length > 0) : null;
-      if (audioObj) {
-        audioUrl = audioObj.audio;
-        audioBtn.classList.remove("hidden");
+      } catch (e) {
+        console.warn("API 1 (Datamuse Meaning) không tìm thấy từ...");
       }
 
-      document.getElementById("posBadge").innerText = item.meanings[0]?.partOfSpeech || "word";
-
-      meaningsList.innerHTML = item.meanings.slice(0, 3).map(m => `
-        <div class="space-y-1">
-          <div class="flex items-start gap-2">
-            <span class="text-xs font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded uppercase mt-0.5">${m.partOfSpeech}</span>
-            <p class="text-slate-800 font-medium">${m.definitions[0].definition}</p>
-          </div>
-          ${m.definitions[0].example ? `<p class="text-slate-500 text-sm italic pl-7">Ex: "${m.definitions[0].example}"</p>` : ''}
-        </div>
-      `).join('');
-    }
-
-    // Tra Word Family tốc độ cao
-    async function fetchWordFamilyFast(word) {
-      const familyContent = document.getElementById("wordFamilyContent");
-      let root = word.length > 4 ? word.slice(0, -3) : word;
-
+      // Tra Word Family từ API 1
       try {
-        const res = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(root)}*&md=p&max=15`);
-        if (res.ok) {
-          const data = await res.json();
-          const familyList = data.filter(item => {
-            const w = item.word.toLowerCase();
-            return w !== word && w.length > 2 && !w.includes(' ') && item.tags;
-          });
-
+        let root = word.length > 4 ? word.slice(0, -3) : word;
+        const resFam = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(root)}*&md=p&max=15`);
+        if (resFam.ok) {
+          const dataFam = await resFam.json();
+          const familyList = dataFam.filter(item => item.word.toLowerCase() !== word && item.word.length > 2 && item.tags);
+          
           if (familyList.length > 0) {
             familyContent.innerHTML = familyList.slice(0, 8).map(i => `
               <button onclick="quickSearch('${i.word}')" 
-                      class="bg-white border border-amber-300 hover:bg-amber-100 text-amber-900 px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1 shadow-sm transition">
+                      class="bg-white border border-amber-300 hover:bg-amber-100 text-amber-900 px-2.5 py-1 rounded-md text-xs font-semibold shadow-sm transition">
                 <span>${i.word}</span>
                 <span class="text-[10px] text-amber-700 font-bold opacity-75">(${i.tags[0] || ''})</span>
               </button>
             `).join('');
           } else {
-            familyContent.innerHTML = '<span class="text-slate-400 text-xs">Không có biến thể</span>';
+            familyContent.innerHTML = '<span class="text-slate-400 text-xs">Không có biến thể từ</span>';
           }
         }
       } catch (e) {
-        familyContent.innerHTML = '<span class="text-slate-400 text-xs">Không có dữ liệu</span>';
+        familyContent.innerHTML = '<span class="text-slate-400 text-xs">API 1 không tìm thấy Word Family</span>';
       }
+
+      return found;
     }
 
-    // Tra Collocations tốc độ cao
-    async function fetchCollocationsFast(word) {
+    // --- API 2: FREE DICTIONARY (Tra IPA + Audio + Backup Nghĩa) ---
+    async function fetchAPI2_FreeDictionary(word) {
+      const audioBtn = document.getElementById("audioBtn");
+      const phoneticEl = document.getElementById("resPhonetic");
+      const meaningsList = document.getElementById("meaningsList");
+      let found = false;
+
+      audioBtn.classList.add("hidden");
+      phoneticEl.innerText = "";
+
+      try {
+        const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
+        if (res.ok) {
+          const data = await res.json();
+          const item = data[0];
+
+          phoneticEl.innerText = item.phonetic || (item.phonetics && item.phonetics.find(p => p.text)?.text) || "";
+          const audioObj = item.phonetics ? item.phonetics.find(p => p.audio && p.audio.length > 0) : null;
+          if (audioObj) {
+            audioUrl = audioObj.audio;
+            audioBtn.classList.remove("hidden");
+          }
+
+          document.getElementById("posBadge").innerText = item.meanings[0]?.partOfSpeech || "word";
+
+          // Nếu API 1 trước đó chưa chèn nghĩa thì API 2 sẽ chèn
+          if (meaningsList.innerHTML.includes("Đang tra cứu")) {
+            meaningsList.innerHTML = item.meanings.slice(0, 3).map(m => `
+              <div class="space-y-1">
+                <div class="flex items-start gap-2">
+                  <span class="text-xs font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded uppercase mt-0.5">${m.partOfSpeech}</span>
+                  <p class="text-slate-800 font-medium">${m.definitions[0].definition}</p>
+                </div>
+                ${m.definitions[0].example ? `<p class="text-slate-500 text-sm italic pl-7">Ex: "${m.definitions[0].example}"</p>` : ''}
+              </div>
+            `).join('');
+          }
+          found = true;
+        }
+      } catch (e) {
+        console.warn("API 2 (FreeDictionary) không tìm thấy từ...");
+      }
+
+      return found;
+    }
+
+    // --- API 3: DATAMUSE BIGRAM (Tra Collocations) ---
+    async function fetchAPI3_Collocations(word) {
       const colList = document.getElementById("collocationList");
       try {
         const res = await fetch(`https://api.datamuse.com/words?lc=${encodeURIComponent(word)}&max=5`);
-        const data = await res.json();
-
-        colList.innerHTML = data.length > 0 
-          ? data.map(i => `<li><b>${word}</b> ${i.word}</li>`).join('')
-          : `<li class="text-slate-400 text-xs list-none">Không có dữ liệu</li>`;
+        if (res.ok) {
+          const data = await res.json();
+          colList.innerHTML = data.length > 0 
+            ? data.map(i => `<li><b>${word}</b> ${i.word}</li>`).join('')
+            : `<li class="text-slate-400 text-xs list-none">Không có Collocations</li>`;
+        }
       } catch (e) {
-        colList.innerHTML = `<li class="text-slate-400 text-xs list-none">Không có dữ liệu</li>`;
+        colList.innerHTML = `<li class="text-slate-400 text-xs list-none">API 3 không tìm thấy dữ liệu</li>`;
       }
     }
 
-    // Tra Phrasal Verbs tốc độ cao
-    async function fetchPhrasalVerbsFast(word) {
+    // --- API 4: WIKTIONARY / DATAMUSE ML (Tra Phrasal Verbs) ---
+    async function fetchAPI4_PhrasalVerbs(word) {
       const pvList = document.getElementById("phrasalVerbList");
       try {
-        const res = await fetch(`https://api.datamuse.com/words?ml=${encodeURIComponent(word)}&max=10`);
+        const res = await fetch(`https://api.datamuse.com/words?ml=${encodeURIComponent(word)}&max=12`);
         if (res.ok) {
           const data = await res.json();
           const phrasals = data.filter(i => i.word.startsWith(word + " ") && i.word.split(' ').length <= 3);
@@ -524,14 +513,15 @@
               </li>
             `).join('');
           } else {
-            pvList.innerHTML = `<li class="text-slate-400 text-xs list-none">Không có Phrasal Verb</li>`;
+            pvList.innerHTML = `<li class="text-slate-400 text-xs list-none">Không có Phrasal Verbs</li>`;
           }
         }
       } catch (e) {
-        pvList.innerHTML = `<li class="text-slate-400 text-xs list-none">Không có dữ liệu</li>`;
+        pvList.innerHTML = `<li class="text-slate-400 text-xs list-none">API 4 không tìm thấy dữ liệu</li>`;
       }
     }
 
+    // Khi cả 4 API đều không thấy -> Gợi ý từ tương đồng
     async function fetchSpellingSuggestionsWithMatch(wrongWord) {
       const suggestionBox = document.getElementById("suggestionBox");
       const noDataBox = document.getElementById("noDataBox");
