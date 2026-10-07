@@ -49,7 +49,7 @@
 
       <!-- BIG HERO SEARCH BAR -->
       <div class="max-w-2xl mx-auto flex bg-white p-2 rounded-2xl shadow-2xl border-2 border-sky-400/50 focus-within:border-sky-400 transition">
-        <input id="searchInputHero" type="text" placeholder="Nhập từ cần tra (e.g. relate, cite, break, look)..." 
+        <input id="searchInputHero" type="text" placeholder="Nhập từ cần tra (e.g. product, relate, cite, break)..." 
                class="w-full px-4 py-3 text-slate-900 focus:outline-none text-lg font-medium rounded-xl" />
         <button onclick="searchWord('hero')" class="bg-gradient-to-r from-sky-500 to-indigo-600 hover:opacity-95 text-white px-8 py-3 rounded-xl font-bold text-base transition shadow-md flex items-center gap-2">
           <span>🔍</span> Search
@@ -59,10 +59,10 @@
       <!-- Quick Word Tags -->
       <div class="pt-2 flex flex-wrap items-center justify-center gap-2 text-xs">
         <span class="text-slate-400 font-medium">Gợi ý hot:</span>
+        <button onclick="quickSearch('product')" class="bg-white/10 hover:bg-sky-500 hover:text-white text-slate-200 px-3 py-1 rounded-full transition">product</button>
         <button onclick="quickSearch('relate')" class="bg-white/10 hover:bg-sky-500 hover:text-white text-slate-200 px-3 py-1 rounded-full transition">relate</button>
         <button onclick="quickSearch('break')" class="bg-white/10 hover:bg-sky-500 hover:text-white text-slate-200 px-3 py-1 rounded-full transition">break</button>
         <button onclick="quickSearch('cite')" class="bg-white/10 hover:bg-sky-500 hover:text-white text-slate-200 px-3 py-1 rounded-full transition">cite</button>
-        <button onclick="quickSearch('look')" class="bg-white/10 hover:bg-sky-500 hover:text-white text-slate-200 px-3 py-1 rounded-full transition">look</button>
       </div>
 
     </div>
@@ -109,7 +109,7 @@
   <!-- Main Search Result Content -->
   <div id="searchResultArea" class="max-w-6xl mx-auto px-4 py-6 hidden">
     
-    <!-- Suggestion Box (Khi không tìm thấy từ chính xác) -->
+    <!-- Suggestion Box -->
     <div id="suggestionBox" class="hidden bg-amber-50 border border-amber-300 rounded-2xl p-6 space-y-4 shadow-sm mb-6">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2 text-amber-900 font-extrabold text-base">
@@ -141,7 +141,7 @@
         <div>
           <h1 id="resWord" class="text-4xl font-extrabold text-indigo-950">---</h1>
           <div class="flex items-center gap-3 mt-2">
-            <span id="posBadge" class="bg-indigo-100 text-indigo-800 text-xs font-bold px-2.5 py-0.5 rounded-full uppercase">verb</span>
+            <span id="posBadge" class="bg-indigo-100 text-indigo-800 text-xs font-bold px-2.5 py-0.5 rounded-full uppercase">word</span>
             <span id="resPhonetic" class="text-slate-500 italic font-mono text-sm">/---/</span>
             <button id="audioBtn" onclick="playAudio()" class="hidden text-sky-600 hover:text-sky-700 text-xl transition">🔊</button>
           </div>
@@ -241,7 +241,6 @@
       renderRecentHistory();
     });
 
-    // Thuật toán tính độ tương đồng % giữa 2 chuỗi (Levenshtein Similarity)
     function calculateSimilarity(str1, str2) {
       const s1 = str1.toLowerCase();
       const s2 = str2.toLowerCase();
@@ -391,21 +390,21 @@
       document.getElementById("collocationList").innerHTML = '<li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>';
       document.getElementById("phrasalVerbList").innerHTML = '<li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>';
 
-      const found = await fetchFastMainMeaning(word);
+      // Chạy tìm nghĩa kết hợp
+      const found = await fetchMainMeaningCombined(word);
 
       if (found) {
         fetchWordFamily(word);
         fetchCollocations(word);
         fetchPhrasalVerbsWiktionary(word);
       } else {
-        // Nếu không có trong từ điển -> Ẩn màn hình kết quả và chạy tìm kiếm gợi ý kèm % match
         document.getElementById("resultContent").classList.add("hidden");
         fetchSpellingSuggestionsWithMatch(word);
       }
     }
 
-    // Tra nhanh nghĩa từ FreeDictionary API
-    async function fetchFastMainMeaning(word) {
+    // Tối ưu hóa API lấy nghĩa
+    async function fetchMainMeaningCombined(word) {
       const audioBtn = document.getElementById("audioBtn");
       const phoneticEl = document.getElementById("resPhonetic");
       const meaningsList = document.getElementById("meaningsList");
@@ -413,6 +412,29 @@
       audioBtn.classList.add("hidden");
       phoneticEl.innerText = "";
 
+      let success = false;
+
+      // 1. Thử Datamuse API trước (Rất nhanh và không bao giờ bị nghẽn)
+      try {
+        const resDm = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(word)}&md=d&max=1`);
+        if (resDm.ok) {
+          const dataDm = await resDm.json();
+          if (dataDm.length > 0 && dataDm[0].word.toLowerCase() === word && dataDm[0].defs) {
+            meaningsList.innerHTML = dataDm[0].defs.slice(0, 4).map(defStr => {
+              const parts = defStr.split('\t');
+              let posFull = parts[0] === 'v' ? 'verb' : (parts[0] === 'n' ? 'noun' : (parts[0] === 'adj' ? 'adjective' : 'word'));
+              return `<div class="flex items-start gap-2">
+                        <span class="text-xs font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded uppercase mt-0.5">${posFull}</span>
+                        <p class="text-slate-800 font-medium">${parts[1] || defStr}</p>
+                      </div>`;
+            }).join('');
+            document.getElementById("posBadge").innerText = "word";
+            success = true;
+          }
+        }
+      } catch (e) {}
+
+      // 2. Tra thêm FreeDictionary API để bổ sung audio & phiên âm IPA
       try {
         const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
         if (res.ok) {
@@ -428,41 +450,25 @@
 
           document.getElementById("posBadge").innerText = item.meanings[0]?.partOfSpeech || "word";
 
-          meaningsList.innerHTML = item.meanings.slice(0, 3).map(m => `
-            <div class="space-y-1">
-              <div class="flex items-start gap-2">
-                <span class="text-xs font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded uppercase mt-0.5">${m.partOfSpeech}</span>
-                <p class="text-slate-800 font-medium">${m.definitions[0].definition}</p>
+          // Nếu bước Datamuse chưa có thì dùng định nghĩa từ đây
+          if (!success) {
+            meaningsList.innerHTML = item.meanings.slice(0, 3).map(m => `
+              <div class="space-y-1">
+                <div class="flex items-start gap-2">
+                  <span class="text-xs font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded uppercase mt-0.5">${m.partOfSpeech}</span>
+                  <p class="text-slate-800 font-medium">${m.definitions[0].definition}</p>
+                </div>
+                ${m.definitions[0].example ? `<p class="text-slate-500 text-sm italic pl-7">Ex: "${m.definitions[0].example}"</p>` : ''}
               </div>
-              ${m.definitions[0].example ? `<p class="text-slate-500 text-sm italic pl-7">Ex: "${m.definitions[0].example}"</p>` : ''}
-            </div>
-          `).join('');
-          return true;
+            `).join('');
+            success = true;
+          }
         }
       } catch (e) {}
 
-      return await fetchDatamuseFallbackMeanings(word);
+      return success;
     }
 
-    async function fetchDatamuseFallbackMeanings(word) {
-      try {
-        const res = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(word)}&md=d&max=1`);
-        const data = await res.json();
-        if (data.length > 0 && data[0].word.toLowerCase() === word && data[0].defs) {
-          document.getElementById("meaningsList").innerHTML = data[0].defs.slice(0, 3).map(defStr => {
-            const parts = defStr.split('\t');
-            return `<div class="flex items-start gap-2">
-                      <span class="text-xs font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded uppercase">${parts[0]}</span>
-                      <p class="text-slate-800 font-medium">${parts[1]}</p>
-                    </div>`;
-          }).join('');
-          return true;
-        }
-      } catch (err) {}
-      return false;
-    }
-
-    // Lấy danh sách từ gợi ý kèm % tính toán độ tương đồng
     async function fetchSpellingSuggestionsWithMatch(wrongWord) {
       const suggestionBox = document.getElementById("suggestionBox");
       const suggestionList = document.getElementById("suggestionList");
@@ -474,7 +480,6 @@
           const suggestions = await res.json();
 
           if (suggestions && suggestions.length > 0) {
-            // Lọc & Tính % tương đồng
             const listWithMatch = suggestions.map(item => {
               const score = calculateSimilarity(wrongWord, item.word);
               return { word: item.word, matchScore: score };
@@ -516,7 +521,6 @@
       }).join('');
     }
 
-    // Tải thêm từ gợi ý khi bấm nút "Tải thêm"
     function loadMoreSuggestions() {
       suggestionLimit += 6;
       fetchSpellingSuggestionsWithMatch(currentSearchWord);
