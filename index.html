@@ -15,7 +15,7 @@
         <span>📖</span> IVOCABULARY
       </div>
 
-      <!-- Small Search in Header (Ẩn ở trang chủ, chỉ hiện khi đã search) -->
+      <!-- Small Search in Header -->
       <div id="headerSearch" class="hidden flex-1 max-w-xl flex bg-white rounded-lg overflow-hidden border border-slate-300 shadow-inner">
         <input id="searchInputHeader" type="text" placeholder="Tra từ tiếng Anh..." 
                class="w-full px-4 py-2 text-slate-900 focus:outline-none text-base" />
@@ -32,7 +32,7 @@
     </div>
   </header>
 
-  <!-- Hero Home Page (Trang chủ chính) -->
+  <!-- Hero Home Page -->
   <section id="welcomeBanner" class="bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 text-white py-12 px-4 shadow-xl border-b border-indigo-800/50">
     <div class="max-w-4xl mx-auto text-center space-y-6">
       
@@ -47,7 +47,7 @@
         Đầy đủ Định nghĩa, Phiên âm IPA, Phát âm chuẩn, Word Formation, Collocations & Phrasal Verbs.
       </p>
 
-      <!-- BIG HERO SEARCH BAR (Ô tìm kiếm bự) -->
+      <!-- BIG HERO SEARCH BAR -->
       <div class="max-w-2xl mx-auto flex bg-white p-2 rounded-2xl shadow-2xl border-2 border-sky-400/50 focus-within:border-sky-400 transition">
         <input id="searchInputHero" type="text" placeholder="Nhập từ cần tra (e.g. relate, cite, break, look)..." 
                class="w-full px-4 py-3 text-slate-900 focus:outline-none text-lg font-medium rounded-xl" />
@@ -68,10 +68,8 @@
     </div>
   </section>
 
-  <!-- Widgets & Features Section (Nội dung trang chủ) -->
+  <!-- Widgets & Features Section -->
   <div id="homeWidgets" class="max-w-6xl mx-auto px-4 py-8 space-y-8">
-    
-    <!-- Word of the Day & Recent History -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       
       <!-- Word of the Day -->
@@ -92,7 +90,7 @@
         </div>
       </div>
 
-      <!-- Lịch sử tìm kiếm gần đây -->
+      <!-- Lịch sử tìm kiếm -->
       <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
         <div class="flex items-center justify-between border-b pb-2">
           <h3 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
@@ -106,43 +104,34 @@
       </div>
 
     </div>
+  </div>
 
-    <!-- Feature Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
-        <span class="text-3xl">⚡</span>
-        <div>
-          <h4 class="font-bold text-slate-800 text-sm">Tốc Độ Siêu Tốc</h4>
-          <p class="text-xs text-slate-500 mt-1">Phản hồi kết quả chỉ trong 0.2 giây nhờ thuật toán Progressive.</p>
+  <!-- Main Search Result Content -->
+  <div id="searchResultArea" class="max-w-6xl mx-auto px-4 py-6 hidden">
+    
+    <!-- Suggestion Box (Khi không tìm thấy từ chính xác) -->
+    <div id="suggestionBox" class="hidden bg-amber-50 border border-amber-300 rounded-2xl p-6 space-y-4 shadow-sm mb-6">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 text-amber-900 font-extrabold text-base">
+          <span>⚠️</span> Không tìm thấy từ chính xác. Gợi ý các từ có độ giống tương đương:
         </div>
       </div>
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
-        <span class="text-3xl">🧩</span>
-        <div>
-          <h4 class="font-bold text-slate-800 text-sm">Word Family Chuẩn</h4>
-          <p class="text-xs text-slate-500 mt-1">Phân loại rõ danh từ, tính từ, trạng từ giúp viết bài chuẩn xác.</p>
-        </div>
-      </div>
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
-        <span class="text-3xl">🔗</span>
-        <div>
-          <h4 class="font-bold text-slate-800 text-sm">Collocation & Phrasal Verbs</h4>
-          <p class="text-xs text-slate-500 mt-1">Tích hợp dữ liệu cụm từ phong phú hỗ trợ luyện thi THPT & HSG.</p>
-        </div>
+      
+      <div id="suggestionList" class="flex flex-wrap gap-2.5"></div>
+
+      <div class="pt-2 border-t border-amber-200 flex justify-between items-center">
+        <span class="text-xs text-amber-800 italic">Không thấy từ bạn muốn?</span>
+        <button id="loadMoreBtn" onclick="loadMoreSuggestions()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition shadow-sm flex items-center gap-1">
+          <span>🔄</span> Tải thêm gợi ý khác
+        </button>
       </div>
     </div>
 
-  </div>
-
-  <!-- Main Search Result Content (Ẩn ban đầu, chỉ hiện khi search) -->
-  <div id="searchResultArea" class="max-w-6xl mx-auto px-4 py-6 hidden">
-    
-    <!-- Suggestion Box -->
-    <div id="suggestionBox" class="hidden bg-amber-50 border border-amber-300 rounded-xl p-5 space-y-3 shadow-sm mb-6">
-      <div class="flex items-center gap-2 text-amber-800 font-bold text-base">
-        <span>⚠️</span> Không tìm thấy từ chính xác. Gợi ý các từ tương tự:
-      </div>
-      <div id="suggestionList" class="flex flex-wrap gap-2"></div>
+    <!-- Thông báo hoàn toàn không tìm thấy dữ liệu -->
+    <div id="noDataBox" class="hidden bg-rose-50 border border-rose-200 text-rose-800 rounded-2xl p-8 text-center space-y-3 my-6 shadow-sm">
+      <div class="text-4xl">🚫</div>
+      <h3 class="text-lg font-extrabold">Không tìm thấy dữ liệu</h3>
+      <p class="text-sm text-rose-600 max-w-md mx-auto">Từ bạn nhập không có trong hệ thống từ điển tiếng Anh và cũng không tìm thấy từ nào đủ tương đồng.</p>
     </div>
 
     <!-- Dictionary Output Card -->
@@ -244,11 +233,42 @@
 
   <script>
     let audioUrl = "";
+    let currentSearchWord = "";
+    let suggestionLimit = 6;
 
     document.addEventListener("DOMContentLoaded", () => {
       checkLicenseStatus();
       renderRecentHistory();
     });
+
+    // Thuật toán tính độ tương đồng % giữa 2 chuỗi (Levenshtein Similarity)
+    function calculateSimilarity(str1, str2) {
+      const s1 = str1.toLowerCase();
+      const s2 = str2.toLowerCase();
+      const len1 = s1.length;
+      const len2 = s2.length;
+      
+      const matrix = Array(len1 + 1).fill(null).map(() => Array(len2 + 1).fill(null));
+
+      for (let i = 0; i <= len1; i++) matrix[i][0] = i;
+      for (let j = 0; j <= len2; j++) matrix[0][j] = j;
+
+      for (let i = 1; i <= len1; i++) {
+        for (let j = 1; j <= len2; j++) {
+          const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j - 1] + cost
+          );
+        }
+      }
+
+      const distance = matrix[len1][len2];
+      const maxLen = Math.max(len1, len2);
+      if (maxLen === 0) return 100;
+      return Math.round((1 - distance / maxLen) * 100);
+    }
 
     function checkLicenseStatus() {
       const isActivated = localStorage.getItem("ivocab_activated");
@@ -323,7 +343,6 @@
       alert("🎉 Kích hoạt thành công bản quyền không giới hạn vĩnh viễn trên máy này!");
     }
 
-    // Lắng nghe phím Enter cho cả 2 ô tìm kiếm
     document.getElementById("searchInputHero").addEventListener("keypress", (e) => {
       if (e.key === "Enter") searchWord('hero');
     });
@@ -331,7 +350,7 @@
       if (e.key === "Enter") searchWord('header');
     });
 
-    function searchWord(source = 'hero') {
+    async function searchWord(source = 'hero') {
       const isActivated = localStorage.getItem("ivocab_activated");
       let usageCount = parseInt(localStorage.getItem("ivocab_usage") || "0");
 
@@ -344,7 +363,9 @@
       const word = inputEl.value.trim().toLowerCase();
       if (!word) return;
 
-      // Đồng bộ nội dung 2 ô input
+      currentSearchWord = word;
+      suggestionLimit = 6;
+
       document.getElementById("searchInputHero").value = word;
       document.getElementById("searchInputHeader").value = word;
 
@@ -353,59 +374,37 @@
         localStorage.setItem("ivocab_usage", usageCount.toString());
       }
 
-      // Lưu vào Lịch sử
       saveToHistory(word);
 
-      // Chuyển giao diện từ Trang chủ -> Trang Kết Quả
       document.getElementById("welcomeBanner").classList.add("hidden");
       document.getElementById("homeWidgets").classList.add("hidden");
       document.getElementById("headerSearch").classList.remove("hidden");
       document.getElementById("searchResultArea").classList.remove("hidden");
 
-      document.getElementById("resWord").innerText = word;
       document.getElementById("suggestionBox").classList.add("hidden");
+      document.getElementById("noDataBox").classList.add("hidden");
+      document.getElementById("resultContent").classList.remove("hidden");
 
+      document.getElementById("resWord").innerText = word;
       document.getElementById("wordFamilyContent").innerHTML = '<span class="text-xs text-slate-400 animate-pulse">Đang tải...</span>';
       document.getElementById("meaningsList").innerHTML = '<div class="text-xs text-slate-400 animate-pulse">Đang tải...</div>';
       document.getElementById("collocationList").innerHTML = '<li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>';
       document.getElementById("phrasalVerbList").innerHTML = '<li class="text-xs text-slate-400 animate-pulse list-none">Đang tải...</li>';
 
-      fetchFastMainMeaning(word);
-      fetchWordFamily(word);
-      fetchCollocations(word);
-      fetchPhrasalVerbsWiktionary(word);
-    }
+      const found = await fetchFastMainMeaning(word);
 
-    // Xử lý Lịch sử tìm kiếm
-    function saveToHistory(word) {
-      let history = JSON.parse(localStorage.getItem("ivocab_history") || "[]");
-      if (!history.includes(word)) {
-        history.unshift(word);
-        if (history.length > 8) history.pop();
-        localStorage.setItem("ivocab_history", JSON.stringify(history));
-        renderRecentHistory();
-      }
-    }
-
-    function renderRecentHistory() {
-      let history = JSON.parse(localStorage.getItem("ivocab_history") || "[]");
-      const listEl = document.getElementById("recentHistoryList");
-      if (history.length > 0) {
-        listEl.innerHTML = history.map(w => `
-          <button onclick="quickSearch('${w}')" class="bg-slate-100 hover:bg-sky-500 hover:text-white text-slate-700 border border-slate-200 px-2.5 py-1 rounded-lg text-xs font-medium transition">
-            ${w}
-          </button>
-        `).join('');
+      if (found) {
+        fetchWordFamily(word);
+        fetchCollocations(word);
+        fetchPhrasalVerbsWiktionary(word);
       } else {
-        listEl.innerHTML = '<span class="text-xs text-slate-400">Chưa có lịch sử tra từ</span>';
+        // Nếu không có trong từ điển -> Ẩn màn hình kết quả và chạy tìm kiếm gợi ý kèm % match
+        document.getElementById("resultContent").classList.add("hidden");
+        fetchSpellingSuggestionsWithMatch(word);
       }
     }
 
-    function clearHistory() {
-      localStorage.removeItem("ivocab_history");
-      renderRecentHistory();
-    }
-
+    // Tra nhanh nghĩa từ FreeDictionary API
     async function fetchFastMainMeaning(word) {
       const audioBtn = document.getElementById("audioBtn");
       const phoneticEl = document.getElementById("resPhonetic");
@@ -421,7 +420,6 @@
           const item = data[0];
 
           phoneticEl.innerText = item.phonetic || (item.phonetics && item.phonetics.find(p => p.text)?.text) || "";
-          
           const audioObj = item.phonetics ? item.phonetics.find(p => p.audio && p.audio.length > 0) : null;
           if (audioObj) {
             audioUrl = audioObj.audio;
@@ -439,18 +437,18 @@
               ${m.definitions[0].example ? `<p class="text-slate-500 text-sm italic pl-7">Ex: "${m.definitions[0].example}"</p>` : ''}
             </div>
           `).join('');
-          return;
+          return true;
         }
       } catch (e) {}
 
-      fetchDatamuseFallbackMeanings(word);
+      return await fetchDatamuseFallbackMeanings(word);
     }
 
     async function fetchDatamuseFallbackMeanings(word) {
       try {
         const res = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(word)}&md=d&max=1`);
         const data = await res.json();
-        if (data.length > 0 && data[0].defs) {
+        if (data.length > 0 && data[0].word.toLowerCase() === word && data[0].defs) {
           document.getElementById("meaningsList").innerHTML = data[0].defs.slice(0, 3).map(defStr => {
             const parts = defStr.split('\t');
             return `<div class="flex items-start gap-2">
@@ -458,12 +456,70 @@
                       <p class="text-slate-800 font-medium">${parts[1]}</p>
                     </div>`;
           }).join('');
+          return true;
+        }
+      } catch (err) {}
+      return false;
+    }
+
+    // Lấy danh sách từ gợi ý kèm % tính toán độ tương đồng
+    async function fetchSpellingSuggestionsWithMatch(wrongWord) {
+      const suggestionBox = document.getElementById("suggestionBox");
+      const suggestionList = document.getElementById("suggestionList");
+      const noDataBox = document.getElementById("noDataBox");
+
+      try {
+        const res = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(wrongWord)}*&max=20`);
+        if (res.ok) {
+          const suggestions = await res.json();
+
+          if (suggestions && suggestions.length > 0) {
+            // Lọc & Tính % tương đồng
+            const listWithMatch = suggestions.map(item => {
+              const score = calculateSimilarity(wrongWord, item.word);
+              return { word: item.word, matchScore: score };
+            }).sort((a, b) => b.matchScore - a.matchScore);
+
+            renderSuggestionButtons(listWithMatch.slice(0, suggestionLimit));
+            suggestionBox.classList.remove("hidden");
+            noDataBox.classList.add("hidden");
+          } else {
+            suggestionBox.classList.add("hidden");
+            noDataBox.classList.remove("hidden");
+          }
         } else {
-          fetchSpellingSuggestions(word);
+          suggestionBox.classList.add("hidden");
+          noDataBox.classList.remove("hidden");
         }
       } catch (err) {
-        fetchSpellingSuggestions(word);
+        suggestionBox.classList.add("hidden");
+        noDataBox.classList.remove("hidden");
       }
+    }
+
+    function renderSuggestionButtons(items) {
+      const suggestionList = document.getElementById("suggestionList");
+      suggestionList.innerHTML = items.map(item => {
+        let badgeColor = "bg-amber-100 text-amber-800 border-amber-300";
+        if (item.matchScore >= 70) badgeColor = "bg-emerald-100 text-emerald-800 border-emerald-300";
+        else if (item.matchScore >= 40) badgeColor = "bg-sky-100 text-sky-800 border-sky-300";
+
+        return `
+          <button onclick="quickSearch('${item.word}')" 
+                  class="bg-white border border-slate-200 hover:border-amber-400 hover:bg-amber-50 text-slate-800 font-bold px-3.5 py-2 rounded-xl text-sm transition shadow-sm flex items-center gap-2">
+            <span>${item.word}</span>
+            <span class="text-[10px] ${badgeColor} font-extrabold px-1.5 py-0.5 rounded-full border">
+              ${item.matchScore}% match
+            </span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    // Tải thêm từ gợi ý khi bấm nút "Tải thêm"
+    function loadMoreSuggestions() {
+      suggestionLimit += 6;
+      fetchSpellingSuggestionsWithMatch(currentSearchWord);
     }
 
     async function fetchWordFamily(word) {
@@ -541,25 +597,33 @@
       }
     }
 
-    async function fetchSpellingSuggestions(wrongWord) {
-      try {
-        const res = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(wrongWord)}*&max=8`);
-        if (res.ok) {
-          const suggestions = await res.json();
-          const suggestionBox = document.getElementById("suggestionBox");
-          const suggestionList = document.getElementById("suggestionList");
+    function saveToHistory(word) {
+      let history = JSON.parse(localStorage.getItem("ivocab_history") || "[]");
+      if (!history.includes(word)) {
+        history.unshift(word);
+        if (history.length > 8) history.pop();
+        localStorage.setItem("ivocab_history", JSON.stringify(history));
+        renderRecentHistory();
+      }
+    }
 
-          if (suggestions && suggestions.length > 0) {
-            suggestionList.innerHTML = suggestions.map(item => `
-              <button onclick="quickSearch('${item.word}')" 
-                      class="bg-white border border-amber-400 hover:bg-amber-500 hover:text-white text-amber-900 font-semibold px-3 py-1.5 rounded-lg text-sm transition shadow-sm">
-                ${item.word}
-              </button>
-            `).join('');
-            suggestionBox.classList.remove("hidden");
-          }
-        }
-      } catch (err) {}
+    function renderRecentHistory() {
+      let history = JSON.parse(localStorage.getItem("ivocab_history") || "[]");
+      const listEl = document.getElementById("recentHistoryList");
+      if (history.length > 0) {
+        listEl.innerHTML = history.map(w => `
+          <button onclick="quickSearch('${w}')" class="bg-slate-100 hover:bg-sky-500 hover:text-white text-slate-700 border border-slate-200 px-2.5 py-1 rounded-lg text-xs font-medium transition">
+            ${w}
+          </button>
+        `).join('');
+      } else {
+        listEl.innerHTML = '<span class="text-xs text-slate-400">Chưa có lịch sử tra từ</span>';
+      }
+    }
+
+    function clearHistory() {
+      localStorage.removeItem("ivocab_history");
+      renderRecentHistory();
     }
 
     function quickSearch(w) {
